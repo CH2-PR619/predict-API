@@ -35,10 +35,13 @@ def predict():
         print(e)
         return jsonify({'error': 'Terjadi kesalahan saat memproses gambar'}), 500
     
-@app.route('/predicts', methods=['GET'])
+@app.route('/predictions', methods=['GET'])
 def prediction():
-    
-    return resulty[-1]
+     if resulty:
+        return resulty[-1]
+     else:
+        return jsonify({'error': 'Belum ada prediksi yang tersedia'})
+
 if __name__ == "__main__":
     app.run(debug=True)
 
