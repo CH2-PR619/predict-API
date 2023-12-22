@@ -13,7 +13,9 @@ resulty = []
 
 def _predict(model, img):
     img = np.array(img.resize((94, 55)))
+    img = np.expand_dims(img, axis=-1)
     img = np.expand_dims(img, axis=0)
+    img = np.repeat(img, 3, axis=-1)
     pred = model.predict(img)
     return 'normal' if pred[0] > 0.5 else 'cataract'
 
