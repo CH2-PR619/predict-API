@@ -8,7 +8,7 @@ from tensorflow.keras.models import load_model
 app = Flask(__name__)
 
 # Muat model yang disimpan
-model = load_model("cataract_model.h5")
+model = load_model("cataract_detection.h5")
 resulty = []
 
 def _predict(model, img):
@@ -16,10 +16,6 @@ def _predict(model, img):
     img = np.expand_dims(img, axis=0)
     pred = model.predict(img)
     return 'normal' if pred[0] > 0.5 else 'cataract'
-
-@app.route('/', methods=['GET'])
-def tes():
-    return "hello this is api flask model"
 
 @app.route('/predicts', methods=['POST'])
 def predict():
@@ -33,7 +29,7 @@ def predict():
 
         # Melakukan prediksi menggunakan model
         result = _predict(model, img)
-        resulty.append({ 'result': result})
+        resulty.append(result)
         return jsonify({'prediction': result})
     except Exception as e:
         print(e)
@@ -44,13 +40,14 @@ def prediction():
      if resulty:
         return resulty[-1]
      else:
-        return jsonify({'error': 'Belum ada prediksi yang tersedia'})
+        return jsonify({'error': 'Belum ada prediksi yang tersedia'}), 500
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(debug=True)
 
 # Endpoint 
 # @app.route("/predicts", methods=["GET"])
 # def predict():
 #    model = pickle.load(open("model.pkl","rb"))
-#    
+#    return model
+

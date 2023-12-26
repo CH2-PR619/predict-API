@@ -1,9 +1,7 @@
-opencv
+flask
 tensorflow
 keras
-numpy
-matplotlib
 pillow
-scipy
-tkinter
-streamlit
+nummpy
+
+
