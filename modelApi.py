@@ -13,11 +13,13 @@ resulty = []
 
 def _predict(model, img):
     img = np.array(img.resize((94, 55)))
-    img = np.expand_dims(img, axis=-1)
     img = np.expand_dims(img, axis=0)
-    img = np.repeat(img, 3, axis=-1)
     pred = model.predict(img)
     return 'normal' if pred[0] > 0.5 else 'cataract'
+
+@app.route('/', methods=['GET'])
+def tes():
+    return "hello this is api flask model"
 
 @app.route('/predicts', methods=['POST'])
 def predict():
@@ -45,11 +47,10 @@ def prediction():
         return jsonify({'error': 'Belum ada prediksi yang tersedia'})
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)
 
 # Endpoint 
 # @app.route("/predicts", methods=["GET"])
 # def predict():
 #    model = pickle.load(open("model.pkl","rb"))
-#    return model
-
+#    
